@@ -5,74 +5,100 @@
 <div align="center">
   <a href="#about">About</a>
    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#techs">Techs</a>
+  <a href="#client-commands">Client commands</a>
   &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#run">Run</a>
-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#commands">Commands</a>
+  <a href="#run-with-go-command">Run with go command</a>
+  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#run-with-docker">Run with Docker</a>
   &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#license">License</a>
 </div>
 
 ## About
 
-Simple gRPC Key Value storage application
+Simple gRPC Key–value storage application
 
-## Techs
+## Client commands
 
-- Golang `1.16.2`
-- gRPC `1.35.0`
-- Cobra `1.1.3`
+`put [key] [value]` - Put a entry
 
-## Run
+`get [key]` - Get value of key
 
-### Clone the repository
+`getAllKeys` - Get all keys
 
-```bash
-# Clone Repository
-$ git clone https://github.com/PUC-DISCIPLINAS/kv-grpc-gamoch-ianbandrade.git
+Commands were made with [Cobra](https://github.com/spf13/cobra)
+
+## Run with go command
+
+### Server - Navigate to folder
+
+```sh
+cd server
 ```
 
-### Run Server
+### Server - Install dependencies
 
-```bash
-# Go to folder
-$ cd kv-grpc-gamoch-ianbandrade/server
-
-# Install the dependencies
-$ go mod vendor
-
-# Start the server
-$ go run main.go
+```sh
+go mod vendor
 ```
 
-The console going to show the result
+### Server - Run application
 
-### Run Client
-
-```bash
-# Go to folder
-$ cd kv-grpc-gamoch-ianbandrade/client
-
-# Install the dependencies
-$ go mod vendor
+```sh
+go run main.go
 ```
 
-#### Client commands
+### Client - Navigate to folder
 
-Commands are built by a modern Go CLI interactions - [Cobra](https://github.com/spf13/cobra)
+```sh
+cd client
+```
 
-#### Usage
+### Client - Install dependencies
 
-You just need to type on Client folder one of this commands below, passing them following args:
+```sh
+go mod vendor
+```
 
-`go run main.go put [key] [value]` - Put a KeyValue object into a server
+### Client - Run application
 
-`go run main.go get [key]` - Get an object value as from your key
+```sh
+go run main.go
+```
 
-`go run main.go GetAllKeys` - Get all Keys
+## Run with Docker
 
-The console going to show the results
+### Authenticate to GitHub Packages
+
+```sh
+echo <READ_PACKAGES_TOKEN> | docker login docker.pkg.github.com -u <USERNAME> --password-stdin
+```
+
+### Pull Docker images
+
+```sh
+docker pull docker.pkg.github.com/puc-disciplinas/kv-grpc-gamoch-ianbandrade/server
+docker pull docker.pkg.github.com/puc-disciplinas/kv-grpc-gamoch-ianbandrade/client
+```
+
+### Rename Docker images
+
+```sh
+docker tag docker.pkg.github.com/puc-disciplinas/kv-grpc-gamoch-ianbandrade/server kv-server
+docker tag docker.pkg.github.com/puc-disciplinas/kv-grpc-gamoch-ianbandrade/client kv-client
+```
+
+### Run server
+
+```sh
+docker run -it --rm --net host kv-server
+```
+
+### Run client
+
+```sh
+docker run -it --rm --net host kv-client
+```
 
 ## License
 
