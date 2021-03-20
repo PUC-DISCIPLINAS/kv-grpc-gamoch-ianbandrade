@@ -3,10 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
-	"key_value/server/pb"
 	"net"
+	"os"
 
 	"google.golang.org/grpc"
+	"key_value/server/pb"
 )
 
 const (
@@ -43,7 +44,8 @@ func main() {
 	lis, err := net.Listen("tcp", port)
 
 	if err != nil {
-		fmt.Printf("Failed to listen: %v\n", err)
+		_, _ = fmt.Fprintf(os.Stderr, "Failed to listen - %s\n", err)
+		os.Exit(1)
 	}
 
 	s := grpc.NewServer()
@@ -51,7 +53,9 @@ func main() {
 	fmt.Printf("Server listening on localhost%s\n", port)
 
 	pb.RegisterKeyValueServiceServer(s, &server{})
+
 	if err := s.Serve(lis); err != nil {
-		fmt.Printf("Failed to serve: %v\n", err)
+		_, _ = fmt.Fprintf(os.Stderr, "Failed to serve - %s\n", err)
+		os.Exit(1)
 	}
 }
