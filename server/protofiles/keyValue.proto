@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package key_value;
 
-option go_package = "protofiles;pb";
+option go_package = "key_value/pb";
 
 service KeyValueService {
   rpc Get (Key) returns (Value) {}
